@@ -1,0 +1,18 @@
+<div class="menu">
+    <div class="menu-left">
+        <ul>
+            <li>salam</li>
+        </ul>
+    </div>
+    <div class="menu-right">
+        <form method="post" class="form-group" id="search">
+            {% csrf_token %}
+            <input type="text" class="form-control" placeholder="search ...">
+            <button type="submit" class="btn btn-success">search</button>
+        </form>
+        <div>
+            <a href="" class="btn btn-info">Login</a>
+            <a href="" class="btn btn-info">SignUp</a>
+        </div>
+    </div>
+</div>
