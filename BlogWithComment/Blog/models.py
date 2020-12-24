@@ -6,38 +6,30 @@ from django.db import models
 
 
 class Subject(models.Model):
-    title = models.CharField(max_length=300, verbose_name='موضوع')
+    title = models.CharField(max_length=300)
 
     def __str__(self):
         return self.title
 
-    class Meta:
-        verbose_name = 'موضوع'
-        verbose_name_plural = 'موضوعات'
-
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='نام کاربری')
-    blog = models.ForeignKey('Blog', on_delete=models.CASCADE, verbose_name='مقاله')
-    title = models.CharField(max_length=300, verbose_name='عنوان')
-    message = models.TextField(verbose_name='پیام')
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ساخت')
+    user = models.CharField(max_length=100)
+    blog = models.ForeignKey('Blog', on_delete=models.CASCADE)
+    title = models.CharField(max_length=300)
+    message = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
 
 class Blog(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='موضوع')
-    title = models.CharField(max_length=300, verbose_name='عنوان مقاله')
-    description = models.TextField(verbose_name='توضیحات')
-    image = models.ImageField(upload_to='blog/', null=True, blank=True, verbose_name='تصویر')
-    create_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ساخت')
-    seen = models.IntegerField(default=0, verbose_name='بازدید')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    title = models.CharField(max_length=300)
+    description = models.TextField()
+    image = models.ImageField(upload_to='blog/', null=True, blank=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+    seen = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
-
-    class Meta:
-        verbose_name = 'مقاله'
-        verbose_name_plural = 'مقالات'

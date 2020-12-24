@@ -1,12 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block style %}
+    <style>
+        p {
+            font-size: 16px;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 
-    <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#">Home</a></li>
-        <li role="presentation"><a href="#">Profile</a></li>
-        <li role="presentation"><a href="#">Messages</a></li>
-    </ul>
+    <div class="bg-white w-50 mr-auto ml-auto mt-5 p-5">
+        <img src="{{ blog.image.url }}">
+        <h3>{{ blog.title }}</h3>
+        <br>
+        <p>{{ blog.description }}</p>
+        <hr>
+        <hr>
+        <h4>نظرات : </h4>
+        {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                <br>
+                {{ form.title }}
+                <br><br>
+                {{ form.message }}
+                <br><br>
+                <button type="submit" class="btn btn-success">ارسال نظر</button>
+                <br><br>
+            </form>
+        {% else %}
+            <h4 class="alert alert-info text-center">برای ارسال نظر باید وارد سایت شوید</h4>
+        {% endif %}
+        <hr>
+        <hr>
+        {% for comment in comments %}
+            <div class="alert alert-secondary p-3 mt-3">
+                <i class="float-left">{{ comment.user }}</i>
+                <h4>{{ comment.title }}</h4>
+                <p>{{ comment.message }}</p>
+            </div>
+        {% endfor %}
+    </div>
 
 {% endblock %}

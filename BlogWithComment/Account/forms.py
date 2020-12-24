@@ -4,26 +4,26 @@ from django.contrib.auth.models import User
 
 class Login_form(forms.Form):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'نام کابری ...', 'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'class': 'input100'}))
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'رمز عبور ...', 'class': 'form-control'}))
+        widget=forms.PasswordInput(attrs={'class': 'input100'}))
 
 
 class Register_form(forms.Form):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'نام کابری ...', 'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'placeholder': 'نام کابری ...', 'class': 'form-input'}))
     first_name = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'نام ...', 'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'placeholder': 'نام ...', 'class': 'form-input'}))
     last_name = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'نام خانوادگی ...', 'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'placeholder': 'نام خانوادگی ...', 'class': 'form-input'}))
     phone = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'شماره موبایل ...', 'class': 'form-control'}))
+        widget=forms.TextInput(attrs={'placeholder': 'شماره موبایل ...', 'class': 'form-input'}))
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'placeholder': 'ایمیل ...', 'class': 'form-control'}))
+        widget=forms.EmailInput(attrs={'placeholder': 'ایمیل ...', 'class': 'form-input'}))
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'رمز عبور ...', 'class': 'form-control'}))
+        widget=forms.PasswordInput(attrs={'placeholder': 'رمز عبور ...', 'class': 'form-input'}))
     re_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'تکرار رمز عبور ...', 'class': 'form-control'}))
+        widget=forms.PasswordInput(attrs={'placeholder': 'تکرار رمز عبور ...', 'class': 'form-input'}))
 
     def clean_username(self):
         username = self.cleaned_data.get('username')

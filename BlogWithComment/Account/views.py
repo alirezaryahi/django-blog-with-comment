@@ -8,7 +8,9 @@ from .models import Custom_user
 # Create your views here.
 
 
-def login(request):
+def Login(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     form = Login_form(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data.get('username')
@@ -27,18 +29,21 @@ def login(request):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     form = Register_form(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
         first_name = form.cleaned_data.get('first_name')
         last_name = form.cleaned_data.get('last_name')
         phone = form.cleaned_data.get('phone')
         email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email,
-                            password=password)
+        User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email,
+                                 password=password, is_superuser=True, is_active=True, is_staff=True)
         user = User.objects.get(username=username)
-        user.custom_user_set.create(phone=phone)
+        Custom_user.objects.create(user_id=user.id, phone=phone)
+        return redirect('/login')
         return redirect('/login')
 
     context = {
@@ -47,6 +52,6 @@ def register(request):
     return render(request, 'register.html', context)
 
 
-def logout(request):
+def Logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('/allblog')

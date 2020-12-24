@@ -15,7 +15,7 @@ class blog_admin(admin.ModelAdmin):
 
 
 class comment_admin(admin.ModelAdmin):
-    list_display = ['user', 'title', 'message']
+    list_display = ['user', 'title', 'message', 'blog']
     search_fields = ['user']
 
     class Meta:

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #our apps
 
     'rest_framework',
+    'django_render_partial',
     'Blog',
     'Account',
 ]

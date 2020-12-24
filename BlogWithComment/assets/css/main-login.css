@@ -316,7 +316,7 @@ iframe {
   position: absolute;
   height: 100%;
   top: 0;
-  right: 0;
+  left: 0;
   padding-right: 5px;
   cursor: pointer;
   -webkit-transition: all 0.4s;

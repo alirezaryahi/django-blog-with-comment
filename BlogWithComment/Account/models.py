@@ -6,12 +6,8 @@ from django.contrib.auth.models import User
 
 
 class Custom_user(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,verbose_name='کاربر')
-    phone = models.IntegerField(verbose_name='تلفن')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone = models.IntegerField()
 
     def __str__(self):
         pass
-
-    class Meta:
-        verbose_name = 'مشخصات کاربر'
-        verbose_name_plural = 'مشخصات کاربران'

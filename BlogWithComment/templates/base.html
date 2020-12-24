@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_partial %}
 
 <!DOCTYPE html>
 <html>
@@ -8,9 +9,11 @@
 
 {% include 'links.html' %}
 
-<body>
+{% block style %}{% endblock %}
 
-{% include 'menu.html' %}
+<body style="direction: rtl">
+
+{% render_partial 'menu' %}
 
 
 <div class="">

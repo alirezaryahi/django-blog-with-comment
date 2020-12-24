@@ -1,6 +1,9 @@
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import ListView
+from django.contrib.auth.models import User
+
 from Blog.models import Blog, Comment
 from .forms import Message_form
 
@@ -10,13 +13,13 @@ from .forms import Message_form
 
 class allBlog(ListView):
     template_name = 'blogs.html'
-    queryset = Blog.objects.all()
-    paginate_by = 6
+    queryset = Blog.objects.all().order_by('-create_at')
+    paginate_by = 8
 
 
 class blogListview(ListView):
     template_name = 'blogs.html'
-    paginate_by = 3
+    paginate_by = 8
 
     def get_queryset(self, *args, **kwargs):
         subject_title = self.kwargs['title']
@@ -28,7 +31,7 @@ class blogListview(ListView):
 
 
 def blogDetail(request, *args, **kwargs):
-    blog_id = kwargs['bookid']
+    blog_id = kwargs['pk']
     blog = Blog.objects.get(id=blog_id)
     comment = Comment.objects.filter(blog=blog_id)
 
@@ -36,15 +39,27 @@ def blogDetail(request, *args, **kwargs):
     if form.is_valid():
         title = form.cleaned_data.get('title')
         message = form.cleaned_data.get('message')
-        Message_form.create(user=request.user.id, blog=blog_id, title=title, message=message)
+        blog.comment_set.create(user=request.user.username, blog=blog_id, title=title, message=message)
 
-    seen = Blog.objects.get(id=blog_id)
-    seen += 1
-    seen.save()
+    blog = Blog.objects.get(id=blog_id)
+    blog.seen += 1
+    blog.save()
 
     context = {
         'blog': blog,
-        'comment': comment,
+        'comments': comment,
         'form': form
     }
     return render(request, 'blogdetail.html', context)
+
+
+def blogSearch(request):
+    context = {}
+    qs = request.GET.get('q')
+    blog = Blog.objects.filter(
+                Q(title__icontains=qs) |
+                Q(description__icontains=qs)
+            )
+    context['blog'] = blog
+
+    return render(request, 'blogSearch.html', context)
