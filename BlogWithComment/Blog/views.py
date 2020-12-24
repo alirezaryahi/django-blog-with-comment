@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from django.contrib.auth.models import User
 
-from Blog.models import Blog, Comment
+from Blog.models import Blog, Comment, Subject
 from .forms import Message_form
 
 
@@ -21,6 +21,12 @@ class blogListview(ListView):
     template_name = 'blogs.html'
     paginate_by = 8
 
+    def get_context_data(self, **kwargs):
+        context = super(ListView, self).get_context_data(**kwargs)
+        category_title = self.kwargs['title']
+        context['subject'] = category_title
+        return context
+
     def get_queryset(self, *args, **kwargs):
         subject_title = self.kwargs['title']
         subject_title = subject_title.replace('-', ' ')
@@ -33,6 +39,7 @@ class blogListview(ListView):
 def blogDetail(request, *args, **kwargs):
     blog_id = kwargs['pk']
     blog = Blog.objects.get(id=blog_id)
+    subject = Subject.objects.get(id=blog.subject_id)
     comment = Comment.objects.filter(blog=blog_id)
 
     form = Message_form(request.POST or None)
@@ -48,7 +55,8 @@ def blogDetail(request, *args, **kwargs):
     context = {
         'blog': blog,
         'comments': comment,
-        'form': form
+        'form': form,
+        'subject': subject
     }
     return render(request, 'blogdetail.html', context)
 
@@ -57,9 +65,9 @@ def blogSearch(request):
     context = {}
     qs = request.GET.get('q')
     blog = Blog.objects.filter(
-                Q(title__icontains=qs) |
-                Q(description__icontains=qs)
-            )
+        Q(title__icontains=qs) |
+        Q(description__icontains=qs)
+    )
     context['blog'] = blog
 
     return render(request, 'blogSearch.html', context)

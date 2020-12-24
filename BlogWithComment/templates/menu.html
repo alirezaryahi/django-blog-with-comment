@@ -1,9 +1,9 @@
 <div class="menu">
     <div class="menu-left pr-5">
         <ul class="d-flex">
-            <li class="border p-3 ml-2"><a class="text-white" href="/allblog/">همه</a></li>
+            <li class="border p-3 ml-2"><a class="text-white" style="font-family: Vazir" href="/allblog/">همه</a></li>
             {% for subject in subjects %}
-                <li class="border p-3 ml-2"><a class="text-white"
+                <li class="border p-3 ml-2"><a class="text-white" style="font-family: Vazir"
                                                href="/blog/{{ subject.title.split|join:"-" }}/">{{ subject.title }}</a>
                 </li>
             {% endfor %}
@@ -11,8 +11,8 @@
     </div>
     <div class="menu-right">
         <form class="form-group"
-              action="/searchBlog">
-            <input type="text" class="form-control" placeholder="search ..." value="{{ request.GET.q }}" name="q">
+              action="/searchBlog" style="margin-bottom: 9px">
+            <input type="text" class="form-control" placeholder="عبارت ..." value="{{ request.GET.q }}" name="q">
             <button type="submit" class="btn btn-success">جستجو</button>
         </form>
         <div>
@@ -20,8 +20,8 @@
                 <a href="/logout" class="btn btn-info">خروج</a>
                 <span class="ml-2"> کاربر :  {{ user.get_username }} </span>
             {% else %}
-                <a href="/login" class="btn btn-info">ورود</a>
-                <a href="/register" class="btn btn-info">ثبت نام</a>
+                <a href="/login" class="btn btn-info" style="font-family: Vazir">ورود</a>
+                <a href="/register" class="btn btn-info" style="font-family: Vazir">ثبت نام</a>
             {% endif %}
         </div>
     </div>

@@ -1,17 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block style %}
+    <style>
+    .cat {
+        top:15px;
+        let:30px
+    }
+    </style>
+{% endblock %}
+
 {% block content %}
 
-    <div class="row pr-5 pl-5 pt-5 pb-3 m-5 bg-white">
+    <div class="row pr-5 pl-5 pt-5 pb-3 m-5 bg-white pos-relative">
+    <i class="pos-absolute cat">دسته بندی : <b>{% if 'allblog' in request.path %}همه {% else %}{{ subject }}{% endif %}</b></i>
         {% for obj in page_obj %}
             <div class="col md-4 col-xl-3 mt-5 mb-5">
                 <div class="card w-100" style="width: 18rem;">
                     <img class="card-img-top" src="{{ obj.image.url }}" alt="{{ obj.title }}">
                     <div class="card-body">
                         <h4 class="card-title">{{ obj.title }}</h4>
-                        <p class="card-text">{{ obj.description|slice:70 }}</p>
-                        <a href="/blogdetail/{{ obj.id }}" class="btn btn-primary">جزییات</a>
+                        <p class="card-text" style="font-family: Vazir">{{ obj.description|slice:70 }}</p>
+                        <a href="/blogdetail/{{ obj.id }}" class="btn btn-primary" style="font-family: Vazir">جزییات</a>
                     </div>
                 </div>
             </div>
