@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}login{% endblock %}
+
+{% block content %}
+
+    <div class="w-50 mr-auto ml-auto mt-5 mb-5">
+        <div class="mr-auto ml-auto w-75">
+            <h1>{% trans "Sign In" %}</h1>
+
+            <div class="ui grid">
+                <div class="six wide column">
+                    <form class="login ui form" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>
+                        <button class="btn btn-info" type="submit">{% trans "Sign In" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
